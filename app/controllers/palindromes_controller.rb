@@ -3,7 +3,6 @@ class PalindromesController < ApplicationController
 
 
   def index
-    @result = (1..params[:number].to_i).each.select{|num| if palindrome?(num.to_s) and palindrome?((num**2).to_s) then num end}.map{|i| [i, i**2]}
   end
 
   def result
@@ -11,6 +10,18 @@ class PalindromesController < ApplicationController
     p flash[:notice]
     return unless flash.empty?
     @result = count_result(params[:number].to_i)
+
+    i = -1
+    @xml_arr = Array.new(@result.size) do
+      i += 1 
+      {index: i + 1, def: @result[i][0], sqr: @result[i][1]}
+    end
+
+    respond_to do |format|
+      format.html
+      format.xml { render :xml => @xml_arr
+      p "!!" }
+    end
   end
 
   private 
