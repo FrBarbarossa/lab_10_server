@@ -18,9 +18,10 @@ class PalindromesController < ApplicationController
     end
 
     respond_to do |format|
-      format.html
       format.xml { render :xml => @xml_arr
       p "!!" }
+      format.rss { render xml: @xml_arr.to_xml }
+
     end
   end
 
